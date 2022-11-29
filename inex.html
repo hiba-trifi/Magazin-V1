@@ -11,18 +11,18 @@
     <img src="formBkg.jpg" class="img" alt="" />
   </div>
   <body>
-     <div id="modal">
-        <h1>
-          Êtes-vous sûr ?
-        </h1>
-        <p>Voulez-vous vraiment supprimer cette ligne ? Ce processus ne peut pas être annulé.</p>
-        <div id="modalBtn">
-       <button  id="modalDelet">Supprimer</button>
-       <button id="modalCancel">Annuler</button>
-        </div>
-     </div>
+    <div id="modal">
+      <h1>Êtes-vous sûr ?</h1>
+      <p>
+        Voulez-vous vraiment supprimer cette ligne ? Ce processus ne peut pas
+        être annulé.
+      </p>
+      <div id="modalBtn">
+        <button id="modalDelet">Supprimer</button>
+        <button id="modalCancel">Annuler</button>
+      </div>
+    </div>
     <div id="container">
-     
       <div class="img"></div>
       <form id="form">
         <span>Nom :</span>
@@ -299,31 +299,33 @@
         var table = document.getElementById("table");
         delet.onclick = deleteBtn;
         function deleteBtn() {
-          document.getElementById('ajouter').disabled = true
-          document.getElementById('modal').style.display = "flex"
-          var modalDelet = document.getElementById('modalDelet')
-          modalDelet.onclick = confirm 
-          function confirm(){
-             table.removeChild(trr);
-             document.getElementById('modal').style.display = "none"
-             document.getElementById('ajouter').disabled = false
+          document.getElementById("ajouter").disabled = true;
+          document.getElementById("modal").style.display = "flex";
+          var modalDelet = document.getElementById("modalDelet");
+          modalDelet.onclick = confirm;
+          function confirm() {
+            table.removeChild(trr);
+            document.getElementById("modal").style.display = "none";
+            document.getElementById("ajouter").disabled = false;
           }
-          var modalCancel = document.getElementById('modalCancel')
-          modalCancel.onclick = cancel
-          function cancel(){
-            document.getElementById('modal').style.display = "none"
-            document.getElementById('ajouter').disabled = false
+          var modalCancel = document.getElementById("modalCancel");
+          modalCancel.onclick = cancel;
+          function cancel() {
+            document.getElementById("modal").style.display = "none";
+            document.getElementById("ajouter").disabled = false;
           }
-          
         }
         // to edit table
         edit.onclick = editBt;
         function editBt() {
           document.getElementById("name").value =
-          table.rows[trr.rowIndex].cells[0].innerText;
+            table.rows[trr.rowIndex].cells[0].innerText;
           brand.value = table.rows[trr.rowIndex].cells[1].innerText;
           price.value = table.rows[trr.rowIndex].cells[2].innerText;
-          date.value = table.rows[trr.rowIndex].cells[3].innerText.split("-").reverse().join("-");
+          date.value = table.rows[trr.rowIndex].cells[3].innerText
+            .split("-")
+            .reverse()
+            .join("-");
           type.value = table.rows[trr.rowIndex].cells[4].innerText;
 
           if (td5.innerText == "Oui") {
@@ -340,7 +342,10 @@
               document.getElementById("name").value;
             table.rows[trr.rowIndex].cells[1].innerText = brand.value;
             table.rows[trr.rowIndex].cells[2].innerText = price.value;
-            table.rows[trr.rowIndex].cells[3].innerText = date.value.split("-").reverse().join("-");
+            table.rows[trr.rowIndex].cells[3].innerText = date.value
+              .split("-")
+              .reverse()
+              .join("-");
             table.rows[trr.rowIndex].cells[4].innerText = type.value;
             if (document.getElementById("yes").checked) {
               td5.innerHTML = "Oui";
