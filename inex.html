@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -7,10 +7,23 @@
     <link rel="stylesheet" href="style.css" />
     <title>Document</title>
   </head>
-
+  <div class="banner">
+    <img src="formBkg.jpg" class="img" alt="" />
+  </div>
   <body>
+     <div id="modal">
+        <h1>
+          Êtes-vous sûr ?
+        </h1>
+        <p>Voulez-vous vraiment supprimer cette ligne ? Ce processus ne peut pas être annulé.</p>
+        <div id="modalBtn">
+       <button  id="modalDelet">Supprimer</button>
+       <button id="modalCancel">Annuler</button>
+        </div>
+     </div>
     <div id="container">
-      <div id="img"></div>
+     
+      <div class="img"></div>
       <form id="form">
         <span>Nom :</span>
         <input type="text" id="name" />
@@ -27,14 +40,16 @@
         <span>Type :</span>
 
         <select name="scroll" id="type">
-          <option value="">Choisie un type</option>
-          <option value="">Hygiène et toilette</option>
-          <option value="">Soins esthétiques</option>
-          <option value="">Produits solaires</option>
-          <option value="">Beauté des mains et des pieds</option>
-          <option value="">Produits de maquillage</option>
-          <option value="">Entretien capillaires</option>
-          <option value="">Parfums</option>
+          <option value="Choisie un type">Choisie un type</option>
+          <option value="Hygiène et toilette">Hygiène et toilette</option>
+          <option value="Soins esthétiques">Soins esthétiques</option>
+          <option value="Produits solaires">Produits solaires</option>
+          <option value="Beauté des mains et des pieds">
+            Beauté des mains et des pieds
+          </option>
+          <option value="Produits de maquillage">Produits de maquillage</option>
+          <option value="Entretien capillaires">Entretien capillaires</option>
+          <option value="Parfums">Parfums</option>
         </select>
         <output id="typeOutput"></output>
         <span>Promotion :</span>
@@ -205,7 +220,7 @@
           nameval = document.getElementById("name").value;
           brandval = brand.value;
           priceval = price.value;
-          dateval = date.value;
+          dateval = date.value.split("-").reverse().join("-");
           // input empty ///
           document.getElementById("name").value = "";
           brand.value = "";
@@ -249,26 +264,10 @@
           td3.innerHTML = dateval;
 
           //   td4 outputs ////
-          if (type.options[1].selected) {
-            td4.innerHTML = "Hygiène et toilette";
-          }
-          if (type.options[2].selected) {
-            td4.innerHTML = "Soins esthétiques";
-          }
-          if (type.options[3].selected) {
-            td4.innerHTML = "Produits solaires";
-          }
-          if (type.options[4].selected) {
-            td4.innerHTML = "Beauté des mains et des pieds";
-          }
-          if (type.options[5].selected) {
-            td4.innerHTML = "Produits de maquillage";
-          }
-          if (type.options[6].selected) {
-            td4.innerHTML = "Entretien capillaires";
-          }
-          if (type.options[7].selected) {
-            td4.innerHTML = "Parfums";
+          for (j = 0; j < type.length; j++) {
+            if (type.options[j].selected) {
+              td4.innerHTML = type.options[j].value;
+            }
           }
 
           //   td5 outputs ////
@@ -296,79 +295,53 @@
         } else {
           document.getElementById("form").style.boxShadow = "2px 2px 2px red";
         }
+        // to delet row  //
         var table = document.getElementById("table");
         delet.onclick = deleteBtn;
         function deleteBtn() {
-          table.removeChild(trr);
+          document.getElementById('ajouter').disabled = true
+          document.getElementById('modal').style.display = "flex"
+          var modalDelet = document.getElementById('modalDelet')
+          modalDelet.onclick = confirm 
+          function confirm(){
+             table.removeChild(trr);
+             document.getElementById('modal').style.display = "none"
+             document.getElementById('ajouter').disabled = false
+          }
+          var modalCancel = document.getElementById('modalCancel')
+          modalCancel.onclick = cancel
+          function cancel(){
+            document.getElementById('modal').style.display = "none"
+            document.getElementById('ajouter').disabled = false
+          }
+          
         }
+        // to edit table
         edit.onclick = editBt;
         function editBt() {
-          //    var nm = table.rows[row].td[1].innerHTML
-          //    document.getElementById('name').value = nm
-          //Pour modifier une ligne
-          //Pour remplir le formulaire avec les champs qui ce trouve dans la ligne
           document.getElementById("name").value =
-            table.rows[trr.rowIndex].cells[0].innerText;
+          table.rows[trr.rowIndex].cells[0].innerText;
           brand.value = table.rows[trr.rowIndex].cells[1].innerText;
           price.value = table.rows[trr.rowIndex].cells[2].innerText;
-          date.value = table.rows[trr.rowIndex].cells[3].innerText;
-        //   if (
-        //     td4.innerText = "Hygiène et toilette"){
-        //         type.options[1].selected.innerHTML  ;
-        //     }
-        //     if ( td4.innerText = "Soins esthétiques") {type.options[2].selected.innerHTML
-             
-        //     }
-        //     if (td4.innerText = "Produits solaires") {= type.options[3].selected.innerHTML 
-              
-        //     }
-        //     if (td4.innerText = "Beauté des mains et des pieds") {type.options[4].selected.innerHTML
-              
-        //     }
-        //     if (td4.innerText = "Produits de maquillage") {type.options[5].selected.innerHTML
-              
-        //     }
-        //     if (td4.innerText = "Entretien capillaires") {type.options[6].selected.innerHTML
-              
-        //     }
-        //     if (td4.innerText = "Parfums") {type.options[7].selected
-              
-        //     }
-         if (radioOutput.innerHTML == "Oui") {
+          date.value = table.rows[trr.rowIndex].cells[3].innerText.split("-").reverse().join("-");
+          type.value = table.rows[trr.rowIndex].cells[4].innerText;
+
+          if (td5.innerText == "Oui") {
             document.getElementById("yes").checked = true;
           } else {
             document.getElementById("no").checked = true;
           }
           document.getElementById("ajouter").value = "Modifier";
+          document.getElementById("ajouter").style.backgroundColor = "#2E88E5";
+
           document.getElementById("ajouter").onclick = edited;
           function edited() {
             table.rows[trr.rowIndex].cells[0].innerText =
               document.getElementById("name").value;
             table.rows[trr.rowIndex].cells[1].innerText = brand.value;
             table.rows[trr.rowIndex].cells[2].innerText = price.value;
-            table.rows[trr.rowIndex].cells[3].innerText = date.value;
-            if (type.options[1].selected) {
-              td4.innerHTML = "Hygiène et toilette";
-            }
-            if (type.options[2].selected) {
-              td4.innerHTML = "Soins esthétiques";
-            }
-            if (type.options[3].selected) {
-              td4.innerHTML = "Produits solaires";
-            }
-            if (type.options[4].selected) {
-              td4.innerHTML = "Beauté des mains et des pieds";
-            }
-            if (type.options[5].selected) {
-              td4.innerHTML = "Produits de maquillage";
-            }
-            if (type.options[6].selected) {
-              td4.innerHTML = "Entretien capillaires";
-            }
-            if (type.options[7].selected) {
-              td4.innerHTML = "Parfums";
-            }
-
+            table.rows[trr.rowIndex].cells[3].innerText = date.value.split("-").reverse().join("-");
+            table.rows[trr.rowIndex].cells[4].innerText = type.value;
             if (document.getElementById("yes").checked) {
               td5.innerHTML = "Oui";
             } else {
@@ -376,9 +349,10 @@
             }
 
             document.getElementById("ajouter").value = "Ajouter";
+            document.getElementById("ajouter").style.backgroundColor =
+              "#F05951";
             document.getElementById("ajouter").onclick = add;
           }
-          // alert('edit')
         }
       }
     </script>
