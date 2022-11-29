@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div id="img"></div>
+      <form id="form">
+        <span>Nom :</span>
+        <input type="text" id="name" />
+        <output id="nameOutput"></output>
+        <span>Marque :</span>
+        <input type="text" id="brand" />
+        <output id="brandOutput"></output>
+        <span>Prix :</span>
+        <input type="text" id="price" />
+        <output id="priceOutput"></output>
+        <span>Date de production :</span>
+        <input type="date" id="date" />
+        <output id="dateOutput"></output>
+        <span>Type :</span>
+
+        <select name="scroll" id="type">
+          <option value="">Choisie un type</option>
+          <option value="">Hygiène et toilette</option>
+          <option value="">Soins esthétiques</option>
+          <option value="">Produits solaires</option>
+          <option value="">Beauté des mains et des pieds</option>
+          <option value="">Produits de maquillage</option>
+          <option value="">Entretien capillaires</option>
+          <option value="">Parfums</option>
+        </select>
+        <output id="typeOutput"></output>
+        <span>Promotion :</span>
+        <div id="promo">
+          <a>Oui :</a><input type="radio" name="typeradio" id="yes" />
+          <a>Non :</a> <input type="radio" name="typeradio" id="no" />
+        </div>
+        <output id="radioOutput"></output>
+        <input type="button" value="Ajouter" id="ajouter" onclick="add()" />
+      </form>
+    </div>
+
+    <table id="table">
+      <tr>
+        <th>Nom</th>
+        <th>Marque</th>
+        <th>Prix</th>
+        <th>Date de production</th>
+        <th>Type</th>
+        <th>Promotion</th>
+      </tr>
+    </table>
+
+    <script>
+      // validation variables /////////////
+      var validname = false;
+      var validbrand = false;
+      var validprice = false;
+      var validdate = false;
+      var validtype = false;
+      var validpromotion = false;
+
+      //   outside add function variables  ///////////
+      var name = document.getElementById("name"); // inputs
+      var brand = document.getElementById("brand");
+      var price = document.getElementById("price");
+      var type = document.getElementById("type");
+      var radio = document.querySelectorAll('input[name="typeradio"]');
+      var date = document.getElementById("date");
+      var nameOutput = document.getElementById("nameOutput"); // output
+      var brandOutput = document.getElementById("brandOutput");
+      var priceOutput = document.getElementById("priceOutput");
+      var typeOutput = document.getElementById("typeOutput");
+      var radioOutput = document.getElementById("radioOutput");
+      var dateOutput = document.getElementById("dateOutput");
+
+      //  Name function //////////////////////////////
+      document.getElementById("name").addEventListener("input", namefun);
+      function namefun() {
+        var name = document.getElementById("name");
+        nameOutput.innerHTML = "";
+
+        if (
+          !name.value.match(/^[a-z A-Z]+$/) ||
+          name.value.length > 30 ||
+          name.value == ""
+        ) {
+          validname = false;
+          nameOutput.innerHTML = "Le nom ne doit pas dépassé 30 caractères";
+        } else {
+          name.style.border = "solid 0px black";
+          validname = true;
+        }
+      }
+      //  brand function //////////////////////////////
+      document.getElementById("brand").addEventListener("input", brandfun);
+      function brandfun() {
+        brandOutput.innerHTML = "";
+        if (
+          !brand.value.match(/^[a-z A-Z]+$/) ||
+          brand.value.length > 30 ||
+          brand.value == ""
+        ) {
+          validbrand = false;
+          brandOutput.innerHTML = "La marque ne doit pas dépassé 30 caractères";
+        } else {
+          brand.style.border = "solid 0px black";
+          validbrand = true;
+        }
+      }
+      //  price function //////////////////////////////
+      document.getElementById("price").addEventListener("input", pricefun);
+      function pricefun() {
+        priceOutput.innerHTML = "";
+        if (!price.value.match(/(^[0-9]+)([.,][0-9]+)?$/)) {
+          validprice = false;
+          priceOutput.innerHTML = "Le prix doit etre un reel";
+        } else {
+          price.style.border = "solid 0px black";
+          validprice = true;
+        }
+      }
+      //  add function //////////////////////////////
+      var counterA = 0;
+      function add() {
+        counterA++;
+        // Empty variables after click /////////////////////////
+
+        // type validation ////////////////////////
+        var counter = 0;
+        typeOutput.innerHTML = "";
+        for (var i = 1; i < type.options.length; i++) {
+          if (type.options[i].selected === true) {
+            counter++;
+          }
+        }
+        if (counter == 0) {
+          typeOutput.innerHTML = "Choisie un type";
+          validtype = false;
+        } else {
+          validtype = true;
+        }
+
+        // promotion validation ////////////////////////
+
+        radioOutput.innerHTML = "";
+        for (var k = 0; k < radio.length; k++) {
+          if (
+            !(
+              document.getElementById("yes").checked ||
+              document.getElementById("no").checked
+            )
+          ) {
+            radioOutput.innerHTML = "Choisie un radio";
+            validradio = false;
+          } else {
+            validradio = true;
+          }
+        }
+
+        //  Date function //////////////////////////////
+
+        dateOutput.innerHTML = "";
+        if (!date.value) {
+          validdate = false;
+          dateOutput.innerHTML = "choisie une date";
+        } else if (date.value) {
+          date.style.border = "solid 0px black";
+          validdate = true;
+        }
+
+        // border style error mesage ////
+        if (
+          document.getElementById("name").value == "" ||
+          validname === false
+        ) {
+          document.getElementById("name").style.border = "solid 1px red";
+        }
+        if (brand.value == "" || validbrand === false) {
+          brand.style.border = "solid 1px red";
+        }
+        if (price.value == "" || validprice === false) {
+          price.style.border = "solid 1px red";
+        }
+        if (date.value == "" || validdate === false) {
+          date.style.border = "solid 1px red";
+        }
+        //  Validation ///////////////////////////////
+        if (
+          validname === true &&
+          validbrand === true &&
+          validprice === true &&
+          validdate === true &&
+          validradio === true &&
+          validtype === true
+        ) {
+          // variabme storing ////
+          nameval = document.getElementById("name").value;
+          brandval = brand.value;
+          priceval = price.value;
+          dateval = date.value;
+          // input empty ///
+          document.getElementById("name").value = "";
+          brand.value = "";
+          price.value = "";
+          date.value = "";
+
+          document.getElementById("form").style.boxShadow = "0px 0px 0px black";
+          // Table function  start ////////////////////////////////
+
+          // variables ///
+          document.getElementById("table").style.display = "block";
+          var row = -1;
+          var table = document.getElementById("table");
+          var trr = document.createElement("tr");
+          var td = document.createElement("td");
+          var td1 = document.createElement("td");
+          var td2 = document.createElement("td");
+          var td3 = document.createElement("td");
+          var td4 = document.createElement("td");
+          var td5 = document.createElement("td");
+          var td6 = document.createElement("td");
+          var td7 = document.createElement("td");
+          td6.setAttribute("class", "btnCell");
+          td7.setAttribute("class", "btnCell");
+
+          // linking element to table ////
+          table.appendChild(trr);
+          trr.appendChild(td);
+          trr.appendChild(td1);
+          trr.appendChild(td2);
+          trr.appendChild(td3);
+          trr.appendChild(td4);
+          trr.appendChild(td5);
+          trr.appendChild(td6);
+          trr.appendChild(td7);
+
+          // table values ////////////////////////////////////////
+          td.innerHTML = nameval;
+          td1.innerHTML = brandval;
+          td2.innerHTML = priceval;
+          td3.innerHTML = dateval;
+
+          //   td4 outputs ////
+          if (type.options[1].selected) {
+            td4.innerHTML = "Hygiène et toilette";
+          }
+          if (type.options[2].selected) {
+            td4.innerHTML = "Soins esthétiques";
+          }
+          if (type.options[3].selected) {
+            td4.innerHTML = "Produits solaires";
+          }
+          if (type.options[4].selected) {
+            td4.innerHTML = "Beauté des mains et des pieds";
+          }
+          if (type.options[5].selected) {
+            td4.innerHTML = "Produits de maquillage";
+          }
+          if (type.options[6].selected) {
+            td4.innerHTML = "Entretien capillaires";
+          }
+          if (type.options[7].selected) {
+            td4.innerHTML = "Parfums";
+          }
+
+          //   td5 outputs ////
+          if (document.getElementById("yes").checked) {
+            td5.innerHTML = "Oui";
+          } else {
+            td5.innerHTML = "Non";
+          }
+
+          // buttons  ////
+
+          // edit btn ////
+          var edit = document.createElement("input");
+          edit.setAttribute("type", "button");
+          edit.setAttribute("value", "modifier");
+          edit.setAttribute("id", "editbtn");
+          td6.appendChild(edit);
+          // delet btn ////
+          var delet = document.createElement("input");
+          delet.setAttribute("type", "button");
+          delet.setAttribute("value", "suprimmer");
+          delet.setAttribute("id", "delet");
+          td7.appendChild(delet);
+          // Table function  End ////////////////////////////////
+        } else {
+          document.getElementById("form").style.boxShadow = "2px 2px 2px red";
+        }
+        var table = document.getElementById("table");
+        delet.onclick = deleteBtn;
+        function deleteBtn() {
+          table.removeChild(trr);
+        }
+        edit.onclick = editBt;
+        function editBt() {
+          //    var nm = table.rows[row].td[1].innerHTML
+          //    document.getElementById('name').value = nm
+          //Pour modifier une ligne
+          //Pour remplir le formulaire avec les champs qui ce trouve dans la ligne
+          document.getElementById("name").value =
+            table.rows[trr.rowIndex].cells[0].innerText;
+          brand.value = table.rows[trr.rowIndex].cells[1].innerText;
+          price.value = table.rows[trr.rowIndex].cells[2].innerText;
+          date.value = table.rows[trr.rowIndex].cells[3].innerText;
+        //   if (
+        //     td4.innerText = "Hygiène et toilette"){
+        //         type.options[1].selected.innerHTML  ;
+        //     }
+        //     if ( td4.innerText = "Soins esthétiques") {type.options[2].selected.innerHTML
+             
+        //     }
+        //     if (td4.innerText = "Produits solaires") {= type.options[3].selected.innerHTML 
+              
+        //     }
+        //     if (td4.innerText = "Beauté des mains et des pieds") {type.options[4].selected.innerHTML
+              
+        //     }
+        //     if (td4.innerText = "Produits de maquillage") {type.options[5].selected.innerHTML
+              
+        //     }
+        //     if (td4.innerText = "Entretien capillaires") {type.options[6].selected.innerHTML
+              
+        //     }
+        //     if (td4.innerText = "Parfums") {type.options[7].selected
+              
+        //     }
+         if (radioOutput.innerHTML == "Oui") {
+            document.getElementById("yes").checked = true;
+          } else {
+            document.getElementById("no").checked = true;
+          }
+          document.getElementById("ajouter").value = "Modifier";
+          document.getElementById("ajouter").onclick = edited;
+          function edited() {
+            table.rows[trr.rowIndex].cells[0].innerText =
+              document.getElementById("name").value;
+            table.rows[trr.rowIndex].cells[1].innerText = brand.value;
+            table.rows[trr.rowIndex].cells[2].innerText = price.value;
+            table.rows[trr.rowIndex].cells[3].innerText = date.value;
+            if (type.options[1].selected) {
+              td4.innerHTML = "Hygiène et toilette";
+            }
+            if (type.options[2].selected) {
+              td4.innerHTML = "Soins esthétiques";
+            }
+            if (type.options[3].selected) {
+              td4.innerHTML = "Produits solaires";
+            }
+            if (type.options[4].selected) {
+              td4.innerHTML = "Beauté des mains et des pieds";
+            }
+            if (type.options[5].selected) {
+              td4.innerHTML = "Produits de maquillage";
+            }
+            if (type.options[6].selected) {
+              td4.innerHTML = "Entretien capillaires";
+            }
+            if (type.options[7].selected) {
+              td4.innerHTML = "Parfums";
+            }
+
+            if (document.getElementById("yes").checked) {
+              td5.innerHTML = "Oui";
+            } else {
+              td5.innerHTML = "Non";
+            }
+
+            document.getElementById("ajouter").value = "Ajouter";
+            document.getElementById("ajouter").onclick = add;
+          }
+          // alert('edit')
+        }
+      }
+    </script>
+  </body>
+</html>
