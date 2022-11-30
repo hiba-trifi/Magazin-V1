@@ -62,7 +62,7 @@ table {
   width: 100px;
   border: none;
   border-radius: 10px;
-  background-color: #f05951;
+  background-color: #fa4c4b;
 }
 #editbtn {
   background-color: #2e88e5;
@@ -72,7 +72,7 @@ table {
   border: none;
 }
 input[type="button"] {
-  background-color: #f05951;
+  background-color: #fa4c4b;
   padding: 2%;
   margin: 0% 40%;
   border: none;
@@ -87,7 +87,7 @@ th {
   /* border-radius: 5px; */
   text-align: center;
   background-color: whitesmoke;
-  border-right: 2px solid #8b9aa2;
+  border-right: 2px solid #d4dde0;
   padding: 7px;
 }
 td {
@@ -96,24 +96,24 @@ td {
   /* border-radius: 5px; */
   padding: 7px;
   color: rgb(0, 0, 0);
-  border-bottom: 1px solid #8b9aa2;
-  border-right: 2px solid #8b9aa2;
-  background-color: #f05951;
+  border-bottom: 1px solid #d4dde0;
+  border-right: 2px solid #d4dde0;
+  background-color: #fa4c4b;
 }
 
 select {
   border-radius: 10px;
   margin: 4% 0%;
   padding: 3%;
-  border: 1px solid #8b9aa2;
+  border: 1px solid #d4dde0;
   background-color: transparent;
-  color: #f05951;
+  color: #fa4c4b;
 }
 
 input {
   font-family: "poppins";
   color: white;
-  box-shadow: 1px 1px 1px #8b9aa2;
+  box-shadow: 1px 1px 1px #d4dde0;
   background-color: rgba(255, 255, 255, 0.199);
   border: none;
   border-radius: 10px;
@@ -138,7 +138,7 @@ input {
   display: none;
 }
 h1 {
-  color: #f05951;
+  color: #fa4c4b;
 }
 
 #modalBtn {
@@ -154,9 +154,14 @@ h1 {
   border-radius: 10px;
 }
 #modalCancel {
-  background-color: #8b9aa2;
+  background-color: #d4dde0;
   padding: 5%;
   margin-left: 5%;
   border: none;
   border-radius: 10px;
+}
+#ajouter:hover{
+  background-color: #d4dde0;
+  color: #000000;
+  transition: 0.4s;
 }
